@@ -3,6 +3,8 @@ package common;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.safari.SafariDriver;
 
 public class CustomDriver {
 
@@ -15,10 +17,10 @@ public class CustomDriver {
     /**
      * Private constructor which will start the webdriver
      */
-    private CustomDriver() {
+    private CustomDriver(String browserName) {
         runningOsPlatform = computeRunningPlatform();
         LOG.info("Running platform is: " + runningOsPlatform);
-        openDriver();
+        openDriver(browserName);
     }
 
     /**
@@ -26,9 +28,9 @@ public class CustomDriver {
      *
      * @return
      */
-    static public CustomDriver getInstance() {
+    static public CustomDriver getInstance(String browserName) {
         if (instance == null)
-            instance = new CustomDriver();
+            instance = new CustomDriver(browserName);
         return instance;
     }
 
@@ -55,17 +57,17 @@ public class CustomDriver {
      *
      * @return
      */
-    private WebDriver openDriver() {
+    private WebDriver openDriver(String browserName) {
         LOG.info("Starting the driver...");
-        String runningPlatform = computeRunningPlatform();
-        if (runningPlatform.equalsIgnoreCase(ProjectConstants.PLATFORM_WINDOWS_OS)) {
-            System.setProperty(ProjectConstants.DRIVER_CHROMEDRIVER_PROP_NAME, ProjectConstants.CHROMEDRIVER_WIN_OS_PATH);
-            LOG.info("Chromedriver path is: " + ProjectConstants.CHROMEDRIVER_WIN_OS_PATH);
-            driver = new ChromeDriver();
-        } else if (runningPlatform.equalsIgnoreCase(ProjectConstants.PLATFORM_MAC_OS)) {
-            System.setProperty(ProjectConstants.DRIVER_CHROMEDRIVER_PROP_NAME, ProjectConstants.CHROMEDRIVER_MAC_OS_PATH);
-            LOG.info("Chromedriver path is: " + ProjectConstants.CHROMEDRIVER_MAC_OS_PATH);
-            driver = new ChromeDriver();
+        if (browserName.equals(ProjectConstants.BROWSER_CHROME)) {
+            LOG.info("Starting on Chrome browser");
+            driver = getChromedDriver();
+        } else if (browserName.equals(ProjectConstants.BROWSER_SAFARI)) {
+            LOG.info("Starting on Safari browser");
+            driver = new SafariDriver();
+        } else if (browserName.equals(ProjectConstants.BROWSER_FIREFOX)) {
+            LOG.info("Starting on Firefox browser");
+            driver = getFirefoxDriver();
         }
         driver.manage().window().maximize();
         LOG.info("Driver started and it should navigate to: " + ProjectConstants.URL);
@@ -73,7 +75,32 @@ public class CustomDriver {
         return driver;
     }
 
+    private WebDriver getChromedDriver() {
+        if (runningOsPlatform.equalsIgnoreCase(ProjectConstants.PLATFORM_WINDOWS_OS)) {
+            System.setProperty(ProjectConstants.DRIVER_CHROMEDRIVER_PROP_NAME, ProjectConstants.CHROMEDRIVER_WIN_OS_PATH);
+            LOG.info("Chromedriver path is: " + ProjectConstants.CHROMEDRIVER_WIN_OS_PATH);
+        } else if (runningOsPlatform.equalsIgnoreCase(ProjectConstants.PLATFORM_MAC_OS)) {
+            System.setProperty(ProjectConstants.DRIVER_CHROMEDRIVER_PROP_NAME, ProjectConstants.CHROMEDRIVER_MAC_OS_PATH);
+            LOG.info("Chromedriver path is: " + ProjectConstants.CHROMEDRIVER_MAC_OS_PATH);
+        }
+        return new ChromeDriver();
+    }
+
+    private WebDriver getFirefoxDriver() {
+        LOG.info("Starting on Firefox browser");
+        if (runningOsPlatform.equalsIgnoreCase(ProjectConstants.PLATFORM_WINDOWS_OS)) {
+            System.setProperty(ProjectConstants.DRIVER_FIREFOXDRIVER_PROP_NAME, ProjectConstants.GECKODRIVER_WIN_OS_PATH);
+            LOG.info("Geckodriver path is: " + ProjectConstants.GECKODRIVER_WIN_OS_PATH);
+        } else if (runningOsPlatform.equalsIgnoreCase(ProjectConstants.PLATFORM_MAC_OS)) {
+            System.setProperty(ProjectConstants.DRIVER_FIREFOXDRIVER_PROP_NAME, ProjectConstants.GECKODRIVER_MAC_OS_PATH);
+            LOG.info("Geckodriver path is: " + ProjectConstants.GECKODRIVER_MAC_OS_PATH);
+        }
+        return new FirefoxDriver();
+    }
+
     /**
+     * Return the webdriver
+     *
      * @return
      */
     public WebDriver getDriver() {

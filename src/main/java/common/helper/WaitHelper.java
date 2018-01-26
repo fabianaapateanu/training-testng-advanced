@@ -17,12 +17,12 @@ import java.util.concurrent.TimeUnit;
 public class WaitHelper {
     private WebDriver driver;
     private final Logger LOG = CustomLogger.getInstance(WaitHelper.class).getLogger();
-    private final int DEFAULT_TIME = 5; //seconds
+    private final int DEFAULT_TIME = 20; //seconds
 
     private static WaitHelper instance = null;
 
-    private WaitHelper() {
-        driver = CustomDriver.getInstance().getDriver();
+    private WaitHelper(WebDriver driver) {
+        this.driver = driver;
     }
 
     /**
@@ -30,9 +30,9 @@ public class WaitHelper {
      *
      * @return
      */
-    static public WaitHelper getInstance() {
+    static public WaitHelper getInstance(WebDriver driver) {
         if (instance == null)
-            instance = new WaitHelper();
+            instance = new WaitHelper(driver);
         return instance;
     }
 

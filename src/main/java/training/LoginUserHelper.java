@@ -14,7 +14,7 @@ public class LoginUserHelper {
     }
 
     public static String readValidPassword() {
-        return "dddd";
+        return "Retarzi_00";
     }
 
     public static String readInvalidPassword() {

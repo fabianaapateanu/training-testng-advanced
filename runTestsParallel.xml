@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <!--  parallel="false" configfailurepolicy="continue" -->
-<suite name="Parallel Methods Suite" parallel="tests" thread-count="20" data-provider-thread-count="20">
-    <test name="Invalid Search">
+<suite name="Parallel Methods Suite" parallel="methods" thread-count="3" data-provider-thread-count="3">
+    <test name="Invalid Search Chrome">
+        <parameter name="browserName" value="chrome"></parameter>
         <classes>
             <class name="dataprovider.DataProviderPrimitiveTests">
                 <methods>
                     <include name="loginAndSearchNoResults"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="Valid Search">
-        <classes>
-            <class name="dataprovider.DataProviderPrimitiveTests">
-                <methods>
-                    <include name="loginAndSearchMultipleResults"/>
                 </methods>
             </class>
         </classes>

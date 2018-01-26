@@ -2,6 +2,7 @@ package basic;
 
 import common.CustomDriver;
 import common.CustomLogger;
+import common.ProjectConstants;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -63,7 +64,7 @@ public class SetupOfTestNgExample {
     @BeforeMethod
     public void runBeforeEachTestMethod() {
         LOG.info("Running setup before each test method");
-        myDriver = CustomDriver.getInstance();
+        myDriver = CustomDriver.getInstance(ProjectConstants.BROWSER_CHROME);
     }
 
     @AfterMethod

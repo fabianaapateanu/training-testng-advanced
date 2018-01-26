@@ -37,11 +37,11 @@ public class UserHeaderMenu {
         log = CustomLogger.getInstance(UserHeaderMenu.class).getLogger();
         log.info("Initializing UserHeaderMenu...");
         this.driver = driver;
-        PageFactory.initElements(driver, this);
-        driverActionHelper = ActionHelper.getInstance();
-        driverWaitHelper = WaitHelper.getInstance();
+        PageFactory.initElements(this.driver, this);
+        driverActionHelper = ActionHelper.getInstance(driver);
+        driverWaitHelper = WaitHelper.getInstance(driver);
 
-        driverWaitHelper.waitForElementVisibility(menuContainer);
+        driverWaitHelper.waitForElementVisibility(userButtonsGroupElem);
 
         log.info("Finished UserHeaderMenu initialization");
     }

@@ -2,6 +2,7 @@ package basic;
 
 import common.CustomDriver;
 import common.CustomLogger;
+import common.ProjectConstants;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -42,7 +43,7 @@ public class IgnoreTestsExample {
         username = LoginUserHelper.readValidUsername();
         password = LoginUserHelper.readValidPassword();
 
-        myDriver = CustomDriver.getInstance();
+        myDriver = CustomDriver.getInstance(ProjectConstants.BROWSER_CHROME);
     }
 
     @AfterMethod

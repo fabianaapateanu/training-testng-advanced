@@ -28,7 +28,7 @@ public class DataProviderPrimitiveTests {
         return data;
     }
 
-    @DataProvider(name = "invalid_search_data")
+    @DataProvider(name = "invalid_search_data", parallel = true)
     public static Object[] invalidSearchData() {
         Object[] data = new Object[]{"poooooooop", "loooooooop", "zooooooooz"};
         return data;
@@ -46,11 +46,12 @@ public class DataProviderPrimitiveTests {
     }
 
     @BeforeMethod(groups = {"positive_tests", "negative_tests"})
-    public void runBeforeEachTestMethod() {
+    @Parameters({"browserName"})
+    public void runBeforeEachTestMethod(String browserName) {
         LOG.info("Running setup before each test method");
         username = LoginUserHelper.readValidUsername();
         password = LoginUserHelper.readValidPassword();
-        myDriver = CustomDriver.getInstance();
+        myDriver = CustomDriver.getInstance(browserName);
         LoginPage loginPage = new LoginPage(myDriver.getDriver());
         homePage = loginPage.performLogin(username, password);
     }
@@ -69,7 +70,7 @@ public class DataProviderPrimitiveTests {
         Assert.assertTrue(homePage.isRepositorySearchResultListDisplayed(), "The search action did not return multiple results");
     }
 
-    @Test(groups = "negative_tests", dataProvider = "invalid_search_data")
+    @Test(groups = "negative_tests", dataProvider = "invalid_search_data", threadPoolSize = 3)
     public void loginAndSearchNoResults(String searchQuery) {
         Assert.assertTrue(homePage.isSearchAreaDisplayed(), "The search area is not displayed");
         homePage.performSearch(searchQuery);
