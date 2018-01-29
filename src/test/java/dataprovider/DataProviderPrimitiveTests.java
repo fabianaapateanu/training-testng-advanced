@@ -63,7 +63,7 @@ public class DataProviderPrimitiveTests {
     }
 
     @Test(groups = "positive_tests", dataProvider = "valid_search_data")
-    public void loginAndSearchMultipleResults(String searchQuery) {
+    public void searchWithMultipleResults(String searchQuery) {
         Assert.assertTrue(homePage.isSearchAreaDisplayed(), "The search area is not displayed");
         homePage.performSearch(searchQuery);
 
@@ -71,7 +71,7 @@ public class DataProviderPrimitiveTests {
     }
 
     @Test(groups = "negative_tests", dataProvider = "invalid_search_data", threadPoolSize = 3)
-    public void loginAndSearchNoResults(String searchQuery) {
+    public void searchWithNoResults(String searchQuery) {
         Assert.assertTrue(homePage.isSearchAreaDisplayed(), "The search area is not displayed");
         homePage.performSearch(searchQuery);
 

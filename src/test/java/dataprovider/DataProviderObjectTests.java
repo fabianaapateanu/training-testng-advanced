@@ -1,5 +1,6 @@
 package dataprovider;
 
+import advanced.CustomTestListener;
 import common.CustomDriver;
 import common.CustomLogger;
 import common.ProjectConstants;
@@ -15,6 +16,7 @@ import training.basic.pageObject.LoginPage;
  *
  * @author fapateanu
  */
+@Listeners({CustomTestListener.class})
 public class DataProviderObjectTests {
     private CustomDriver myDriver;
     private static Logger LOG;
@@ -48,7 +50,7 @@ public class DataProviderObjectTests {
         myDriver.closeDriver();
     }
 
-    @Test(dataProvider = "loginInvalidProvider")
+    @Test(dataProvider = "invalid_user_data")
     public void loginWithInvalidUser(User testUser) {
         LoginPage loginPage = new LoginPage(myDriver.getDriver());
         loginPage.fillUsername(testUser.getUsername());
