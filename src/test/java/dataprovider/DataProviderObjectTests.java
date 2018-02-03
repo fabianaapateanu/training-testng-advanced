@@ -1,6 +1,5 @@
 package dataprovider;
 
-import advanced.CustomTestListener;
 import common.CustomDriver;
 import common.CustomLogger;
 import common.ProjectConstants;
@@ -16,7 +15,7 @@ import training.basic.pageObject.LoginPage;
  *
  * @author fapateanu
  */
-@Listeners({CustomTestListener.class})
+//@Listeners({CustomTestListener.class})
 public class DataProviderObjectTests {
     private CustomDriver myDriver;
     private static Logger LOG;
@@ -57,5 +56,10 @@ public class DataProviderObjectTests {
         loginPage.fillPassword(testUser.getPassword());
         loginPage.clickLogin();
         Assert.assertTrue(loginPage.isErrorMessageDisplayed(), "Some failure log");
+    }
+
+    @Test
+    public void loginWithValidUser() {
+        Assert.assertTrue(false, "Stub test method for failed status");
     }
 }
