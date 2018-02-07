@@ -22,15 +22,15 @@ public class DataProviderPrimitiveTests {
     private CustomDriver myDriver;
     private static Logger LOG;
 
-    @DataProvider(name = "valid_search_data")
+    @DataProvider(name = "valid_search_data", parallel = true)
     public static Object[] validSearchData() {
-        Object[] data = new Object[]{"appium", "webdriver", "testng"};
+        Object[] data = new Object[]{"appium", "webdriver"};
         return data;
     }
 
     @DataProvider(name = "invalid_search_data", parallel = true)
     public static Object[] invalidSearchData() {
-        Object[] data = new Object[]{"poooooooop", "loooooooop", "zooooooooz"};
+        Object[] data = new Object[]{"poooooooop", "loooooooop"};
         return data;
     }
 
@@ -62,7 +62,7 @@ public class DataProviderPrimitiveTests {
         myDriver.closeDriver();
     }
 
-    @Test(groups = "positive_tests", dataProvider = "valid_search_data")
+    @Test(groups = "positive_tests", dataProvider = "valid_search_data", threadPoolSize = 2)
     public void searchWithMultipleResults(String searchQuery) {
         Assert.assertTrue(homePage.isSearchAreaDisplayed(), "The search area is not displayed");
         homePage.performSearch(searchQuery);
@@ -70,7 +70,7 @@ public class DataProviderPrimitiveTests {
         Assert.assertTrue(homePage.isRepositorySearchResultListDisplayed(), "The search action did not return multiple results");
     }
 
-    @Test(groups = "negative_tests", dataProvider = "invalid_search_data", threadPoolSize = 3)
+    @Test(groups = "negative_tests", dataProvider = "invalid_search_data", threadPoolSize = 2)
     public void searchWithNoResults(String searchQuery) {
         Assert.assertTrue(homePage.isSearchAreaDisplayed(), "The search area is not displayed");
         homePage.performSearch(searchQuery);

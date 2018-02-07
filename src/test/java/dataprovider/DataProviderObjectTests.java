@@ -2,7 +2,6 @@ package dataprovider;
 
 import common.CustomDriver;
 import common.CustomLogger;
-import common.ProjectConstants;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -59,7 +58,7 @@ public class DataProviderObjectTests {
         Assert.assertTrue(loginPage.isErrorMessageDisplayed(), "Some failure log");
     }
 
-    @Test
+    @Test()
     public void loginWithValidUser() {
         Assert.assertTrue(false, "Stub test method for failed status");
     }

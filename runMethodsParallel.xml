@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="Parallel Methods Suite" parallel="tests">
-    <test name="Invalid Search Chrome">
+<suite name="Parallel Methods Suite" parallel="methods" configfailurepolicy="continue">
+    <test name="Parallel Search On Chrome">
         <parameter name="browserName" value="chrome"></parameter>
         <classes>
-            <class name="dataprovider.DataProviderPrimitiveTests">
-                <methods>
-                    <include name="searchWithNoResults"/>
-                </methods>
-            </class>
+            <class name="dataprovider.DataProviderPrimitiveTests"/>
         </classes>
     </test>
 </suite>

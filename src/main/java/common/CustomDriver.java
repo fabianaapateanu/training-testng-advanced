@@ -7,10 +7,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 public class CustomDriver {
-
-    private WebDriver driver;
+    private static ThreadLocal<WebDriver> threadSafeDriver = new ThreadLocal<WebDriver>();
     private String runningOsPlatform = null;
-    private static CustomDriver instance = null;
 
     private final Logger LOG = CustomLogger.getInstance(CustomDriver.class).getLogger();
 
@@ -20,18 +18,18 @@ public class CustomDriver {
     private CustomDriver(String browserName) {
         runningOsPlatform = computeRunningPlatform();
         LOG.info("Running platform is: " + runningOsPlatform);
-        openDriver(browserName);
+        threadSafeDriver.set(openDriver(browserName));
     }
 
     /**
      * Get the CustomDriver unique instance
+     * This will be used for running in parallel
+     * therefore create a new instance every time
      *
      * @return
      */
-    static public CustomDriver getInstance(String browserName) {
-        if (instance == null)
-            instance = new CustomDriver(browserName);
-        return instance;
+    public static CustomDriver getInstance(String browserName) {
+        return new CustomDriver(browserName);
     }
 
     /**
@@ -53,11 +51,12 @@ public class CustomDriver {
     }
 
     /**
-     * Open the webdriver
+     * Open and create the webdriver
      *
      * @return
      */
     private WebDriver openDriver(String browserName) {
+        WebDriver driver = null;
         LOG.info("Starting the driver...");
         if (browserName.equals(ProjectConstants.BROWSER_CHROME)) {
             LOG.info("Starting on Chrome browser");
@@ -104,7 +103,7 @@ public class CustomDriver {
      * @return
      */
     public WebDriver getDriver() {
-        return driver;
+        return threadSafeDriver.get();
     }
 
     /**
@@ -112,11 +111,12 @@ public class CustomDriver {
      */
     public void closeDriver() {
         LOG.info("Closing the driver...");
-        if (instance != null) {
+        WebDriver driver = threadSafeDriver.get();
+        if (driver != null) {
+            driver.close();
             driver.quit();
-            instance = null;
         } else {
-            LOG.warn("The CustomDriver instance is null, driver is not probably started.");
+            LOG.warn("The driver is null, driver is not probably started.");
         }
     }
 }
