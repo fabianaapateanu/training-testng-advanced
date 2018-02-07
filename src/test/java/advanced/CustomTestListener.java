@@ -7,7 +7,7 @@ import org.testng.ITestListener;
 import org.testng.ITestResult;
 
 /**
- * Custome test listener example for showing what can we do before & after test run
+ * Custom test listener example for showing what can we do before & after test run
  * or specific actions based on test execution results.
  *
  * @author fapateanu
@@ -21,7 +21,7 @@ public class CustomTestListener implements ITestListener {
     }
 
     public void onFinish(ITestContext context) {
-        LOG.info("=== ON FINISH === Invoked after all the tests have run and all their Configuration methods have been called.");
+        LOG.info("=== ON FINISH === Invoked after all the tests have run and all their configuration methods have been called.");
     }
 
     public void onTestStart(ITestResult testResult) {
@@ -31,6 +31,7 @@ public class CustomTestListener implements ITestListener {
     public void onTestSuccess(ITestResult testResult) {
         LOG.info("=== ON TEST SUCCESS === Invoked each time a test succeeds.");
         setMethodDetails("PASSED", testResult);
+        //TODO Example: send Pass status to test in Jira/HOQC
     }
 
     public void onTestSkipped(ITestResult testResult) {
@@ -41,15 +42,21 @@ public class CustomTestListener implements ITestListener {
     public void onTestFailure(ITestResult testResult) {
         LOG.info("=== ON TEST FAIL === Invoked each time a test fails.");
         setMethodDetails("FAILED", testResult);
+        //TODO Example: take screenshot of the browser
     }
 
     public void onTestFailedButWithinSuccessPercentage(ITestResult testResult) {
         LOG.info("=== ON FINISH WITHIN SUCCESS PERCENTAGE === Invoked each time a method fails but has been annotated with successPercentage and this failure still keeps it within the success percentage requested.");
     }
 
+    /**
+     * Method which displays in the console the test method name and its status
+     *
+     * @param resultStatus
+     * @param testResult
+     */
     public void setMethodDetails(String resultStatus, ITestResult testResult) {
         String methodName = testResult.getMethod().getMethodName();
         LOG.info("<<< METHOD: " + methodName + " HAS " + resultStatus + " >>>");
     }
-
 }

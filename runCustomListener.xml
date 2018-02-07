@@ -5,7 +5,7 @@
         <listener class-name="advanced.CustomTestListener"/>
     </listeners>
     <test name="Login Tests">
-        <parameter name="browserName" value="chrome"></parameter>
+        <parameter name="browserName" value="firefox"></parameter>
         <classes>
             <class name="dataprovider.DataProviderObjectTests"/>
         </classes>

@@ -38,9 +38,10 @@ public class DataProviderObjectTests {
     }
 
     @BeforeMethod()
-    public void runBeforeEachTestMethod() {
+    @Parameters({"browserName"})
+    public void runBeforeEachTestMethod(String browserName) {
         LOG.info("Running setup before each test method");
-        myDriver = CustomDriver.getInstance(ProjectConstants.BROWSER_CHROME);
+        myDriver = CustomDriver.getInstance(browserName);
     }
 
     @AfterMethod()
