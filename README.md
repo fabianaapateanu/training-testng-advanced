@@ -51,7 +51,7 @@ The TestNG xml suite file to be run is: `runMethodsParallel.xml`
     2. Thread count attribute has been set for both test methods:
         * `@Test(groups = "positive_tests", dataProvider = "valid_search_data", threadPoolSize = 2)`
         * `@Test(groups = "negative_tests", dataProvider = "invalid_search_data", threadPoolSize = 2)`
-2. The test suite file runMethodsParallel.xml:
+2. The test suite file `runMethodsParallel.xml`:
    1. Attribute parallel has been set to methods in the xml file:
         * `<suite name="Parallel Methods Suite" parallel="methods">`
    2. The browserName parameter has been set:
@@ -86,4 +86,10 @@ TestNG default reports and ReporterNG example
         * `<listener class-name="org.uncommons.reportng.HTMLReporter"/>`
         * `<listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>`
      2. These listeners are available through the dependencies added in the `pom.xml` file
-     3. After running the suite file the `/test-output` directory will be generated in which you can find a HTML & a XML report 
+     3. After running the suite file the `/test-output` directory will be generated in which you can find a HTML & a XML report
+     
+##Practice and play :exclamation:
+* Go to https://ive.endava.com and login with you endava account (username & password from your computer)
+* Make sure to talk with one of your colleagues to login also
+* Go to section Quizzes and search for the quiz with name "TestNG & JUnit basics"
+* Invite you colleague and play together the quiz! 
