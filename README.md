@@ -21,7 +21,7 @@ Advanced TestNG examples in Java
 For being able to run the tests in parallel and having another instance of WebDriver available we have added in `CustomDriver.java`
 the thread safe driver usage:
 
-`private static ThreadLocal<WebDriver> threadSafeDriver = new ThreadLocal<WebDriver>();`
+`private static ThreadLocal<WebDriver> myDriver = new ThreadLocal<WebDriver>();`
 
 ## Browser parameter
 browserName parameter can be used for running the tests.
@@ -49,8 +49,8 @@ The TestNG xml suite file to be run is: `runMethodsParallel.xml`
         * `@DataProvider(name = "invalid_search_data", parallel = true)`
         * `@DataProvider(name = "valid_search_data", parallel = true)`
     2. Thread count attribute has been set for both test methods:
-        * `@Test(groups = "positive_tests", dataProvider = "valid_search_data", threadPoolSize = 2)`
-        * `@Test(groups = "negative_tests", dataProvider = "invalid_search_data", threadPoolSize = 2)`
+        * `@Test(groups = "positive_tests", dataProvider = "valid_search_data", threadPoolSize = 10)`
+        * `@Test(groups = "negative_tests", dataProvider = "invalid_search_data", threadPoolSize = 10)`
 2. The test suite file `runMethodsParallel.xml`:
    1. Attribute parallel has been set to methods in the xml file:
         * `<suite name="Parallel Methods Suite" parallel="methods">`
@@ -87,7 +87,13 @@ TestNG default reports and ReporterNG example
         * `<listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>`
      2. These listeners are available through the dependencies added in the `pom.xml` file
      3. After running the suite file the `/test-output` directory will be generated in which you can find a HTML & a XML report
-     
+   
+## Demo 4
+Example of running in parallel at test level.
+1. Suite file `runTestsParallel.xml` will run:
+    1. `searchWithMultipleResults(String searchQuery)` test on Chrome
+    2. `searchWithNoResults(String searchQuery)` test on Firefox
+  
 ##Practice and play :exclamation:
 * Go to https://ive.endava.com and login with you endava account (username & password from your computer)
 * Make sure to talk with one of your colleagues to login also
