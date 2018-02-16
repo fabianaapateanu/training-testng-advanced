@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Parallel Methods Suite" parallel="tests" data-provider-thread-count="20" thread-count="10">
+    <test name="Parallel Search On Chrome">
+        <parameter name="browserName" value="chrome"></parameter>
+        <classes>
+            <class name="dataprovider.DataProviderPrimitiveTests">
+                <methods>
+                    <include name="searchWithMultipleResults"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Parallel Search On Firefox">
+        <parameter name="browserName" value="firefox"></parameter>
+        <classes>
+            <class name="dataprovider.DataProviderPrimitiveTests">
+                <methods>
+                    <include name="searchWithNoResults"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

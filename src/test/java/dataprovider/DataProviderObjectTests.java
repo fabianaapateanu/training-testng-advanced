@@ -16,8 +16,8 @@ import training.basic.pageObject.LoginPage;
  */
 //@Listeners({CustomTestListener.class})
 public class DataProviderObjectTests {
-    private CustomDriver myDriver;
     private static Logger LOG;
+    private static ThreadLocal<CustomDriver> myDriver = new ThreadLocal<CustomDriver>();
 
     @DataProvider(name = "invalid_user_data")
     public Object[] loginInvalidProvider() {
@@ -40,18 +40,18 @@ public class DataProviderObjectTests {
     @Parameters({"browserName"})
     public void runBeforeEachTestMethod(String browserName) {
         LOG.info("Running setup before each test method");
-        myDriver = CustomDriver.getInstance(browserName);
+        myDriver.set(CustomDriver.getInstance(browserName));
     }
 
     @AfterMethod()
     public void runAfterEachTestMethod() {
         LOG.info("Running teardown before each test method");
-        myDriver.closeDriver();
+        myDriver.get().closeDriver();
     }
 
     @Test(dataProvider = "invalid_user_data")
     public void loginWithInvalidUser(User testUser) {
-        LoginPage loginPage = new LoginPage(myDriver.getDriver());
+        LoginPage loginPage = new LoginPage(myDriver.get().getDriver());
         loginPage.fillUsername(testUser.getUsername());
         loginPage.fillPassword(testUser.getPassword());
         loginPage.clickLogin();

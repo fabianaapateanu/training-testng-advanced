@@ -19,8 +19,9 @@ public class DataProviderPrimitiveTests {
     private static String password;
     private HomePage homePage;
 
-    private CustomDriver myDriver;
     private static Logger LOG;
+
+    private static ThreadLocal<CustomDriver> myDriver = new ThreadLocal<CustomDriver>();
 
     @DataProvider(name = "valid_search_data", parallel = true)
     public static Object[] validSearchData() {
@@ -51,18 +52,18 @@ public class DataProviderPrimitiveTests {
         LOG.info("Running setup before each test method");
         username = LoginUserHelper.readValidUsername();
         password = LoginUserHelper.readValidPassword();
-        myDriver = CustomDriver.getInstance(browserName);
-        LoginPage loginPage = new LoginPage(myDriver.getDriver());
+        myDriver.set(CustomDriver.getInstance(browserName));
+        LoginPage loginPage = new LoginPage(myDriver.get().getDriver());
         homePage = loginPage.performLogin(username, password);
     }
 
     @AfterMethod(groups = {"positive_tests", "negative_tests"})
     public void runAfterEachTestMethod() {
         LOG.info("Running teardown before each test method");
-        myDriver.closeDriver();
+        myDriver.get().closeDriver();
     }
 
-    @Test(groups = "positive_tests", dataProvider = "valid_search_data", threadPoolSize = 2)
+    @Test(groups = "positive_tests", dataProvider = "valid_search_data", threadPoolSize = 10)
     public void searchWithMultipleResults(String searchQuery) {
         Assert.assertTrue(homePage.isSearchAreaDisplayed(), "The search area is not displayed");
         homePage.performSearch(searchQuery);
@@ -70,7 +71,7 @@ public class DataProviderPrimitiveTests {
         Assert.assertTrue(homePage.isRepositorySearchResultListDisplayed(), "The search action did not return multiple results");
     }
 
-    @Test(groups = "negative_tests", dataProvider = "invalid_search_data", threadPoolSize = 2)
+    @Test(groups = "negative_tests", dataProvider = "invalid_search_data", threadPoolSize = 10)
     public void searchWithNoResults(String searchQuery) {
         Assert.assertTrue(homePage.isSearchAreaDisplayed(), "The search area is not displayed");
         homePage.performSearch(searchQuery);

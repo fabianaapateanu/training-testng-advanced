@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="Parallel Methods Suite" parallel="methods" configfailurepolicy="continue">
+<suite name="Parallel Methods Suite" parallel="methods" configfailurepolicy="continue" data-provider-thread-count="20">
     <test name="Parallel Search On Chrome">
-        <parameter name="browserName" value="chrome"></parameter>
+        <parameter name="browserName" value="firefox"></parameter>
         <classes>
             <class name="dataprovider.DataProviderPrimitiveTests"/>
         </classes>

@@ -17,7 +17,7 @@ public class CustomTestListener implements ITestListener {
     private Logger LOG = CustomLogger.getInstance(CustomTestListener.class).getLogger();
 
     public void onStart(ITestContext context) {
-        LOG.info("=== ON START === Invoked after the test class is instantiated and before any configuration method is called.");
+        LOG.info("=== ON START === Invoked before the test class is instantiated and before any configuration method is called.");
     }
 
     public void onFinish(ITestContext context) {

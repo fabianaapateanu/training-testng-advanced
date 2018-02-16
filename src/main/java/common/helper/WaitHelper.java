@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class WaitHelper {
     private WebDriver driver;
     private final Logger LOG = CustomLogger.getInstance(WaitHelper.class).getLogger();
-    private final int DEFAULT_TIME = 20; //seconds
+    private final int DEFAULT_TIME = 30; //seconds
 
     private static WaitHelper instance = null;
 
