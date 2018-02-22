@@ -24,7 +24,8 @@ the thread safe driver usage:
 `private static ThreadLocal<WebDriver> myDriver = new ThreadLocal<WebDriver>();`
 
 ## Browser parameter
-browserName parameter can be used for running the tests.
+browserName parameter should be used for running the tests. You will need to use this mandatory parameter providing it in the xml suite file, 
+this means you will not be able to run the tests directly from IntelliJ with right-click, only through the suite xml file.
 See the example in `runMethodsParallel.xml` suite file and in the `DataProviderPrimitiveTests.java` at `@BeforeMethod` setup method.
 
 Supported values are:
